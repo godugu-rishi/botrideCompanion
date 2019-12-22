@@ -1,22 +1,61 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 33.6846, lng: -117.8265},
+          zoom: 12
+        });
+        var DJ = new google.maps.Marker({
+          position:{lat:33.689642,lng:-117.834837},
+          map:map
+        });
+        var BusN = new google.maps.Marker({
+          position:{lat:33.649328,lng:-117.839692},
+          map:map
+        });
+        var UCIArtSchool = new google.maps.Marker({
+          position:{lat:33.649619,lng: -117.846211},
+          map:map
+        });
+        var HyCapS = new google.maps.Marker({
+          position:{lat:33.660146,lng: -117.862099},
+          map:map
+        });
+        var MacACt = new google.maps.Marker({
+          position:{lat:33.670126,lng:-117.861735},
+          map:map
+        });
 
-<head>
-  <meta charset="utf-8">
-  <title></title>
-  <script src="js/script.js"></script>
-</head>
-
-<style>
-
-</style>
-
-<body>
-
-  <p>Hello, world!</p>
 
 
 
-</body>
+      <!--diamond jamboree X, north bus station by post X, uci art school semi off mesard X, hyundai capital south X, mac Arthur court, Toscana Apartments at leasing center 35 buena vista, Villa Siena entrance on plantine rd, NE corner of trade food hall, hyundai capital north michelson building at roundabout, park place apartments, villa coronado west entrance gate, park west apartment, 18818 teller avenue, irvine city hall bench on civic center plaza (nw corner of civic center plaza and harvard ave), west park plaza sprouts, west park plaza target, west park plaza ca fish grill, culver plaza hearthstone dr, culver plaza 7-11 -->
+      }
 
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHPx7NLrM0UwRLrfSX674rCoS3CtueB48&callback=initMap"
+    async defer></script>
+  </body>
 </html>
