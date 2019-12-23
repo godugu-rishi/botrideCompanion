@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
   <head>
     <title>Simple Map</title>
@@ -8,25 +8,53 @@
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map {
+        position: absolute;
         height: 100%;
+        width: 100%;
+        z-index: 0;
+        float: top;
+
+      }
+      #msg {
+        position: relative;
+        margin-top: 40%;
+        padding-bottom: 5px;
+        z-index: 1;
+        float: bottom;
+
+      }
+      #gobutton {
+        height: 20px;
+        width: 30px;
+        position: relative;
+        float: bottom;
+        margin-bottom:10px;
+        background-color: WHITE;
+
+
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
         height: 100%;
         margin: 0;
         padding: 0;
+        overflow: hidden;
       }
     </style>
   </head>
   <body>
     <div id="map"></div>
+    <div id="msg"></div>
     <script>
       var map;
-      function initMap() {
+
+      <!-- init map object -->
+      function initMap(route) {
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 33.6846, lng: -117.8265},
           zoom: 12
         });
+        <!-- poi markers -->
         var DJ = new google.maps.Marker({
           position:{lat:33.689642,lng:-117.834837},
           map:map
@@ -47,15 +75,50 @@
           position:{lat:33.670126,lng:-117.861735},
           map:map
         });
+        let directionsService = new google.maps.DirectionsService();
+        let directionsRenderer = new google.maps.DirectionsRenderer();
+
+        if(route)
+        {
+          directionsRenderer.setMap(map); // Existing map object displays directions
+          // Create route from existing points used for markers
+          const route = {
+              origin: {lat:33.689642,lng:-117.834837},
+              destination: {lat:33.649328,lng:-117.839692},
+              travelMode: 'DRIVING'
+          }
+
+          directionsService.route(route,
+            function(response, status) { // anonymous function to capture directions
+              if (status !== 'OK') {
+                window.alert('Directions request failed due to ' + status);
+                return;
+              } else {
+                directionsRenderer.setDirections(response); // Add route to the map
+                var directionsData = response.routes[0].legs[0]; // Get data about the mapped route
+                if (!directionsData) {
+                  window.alert('Directions request failed');
+                  return;
+                }
+                else {
+                  document.getElementById('msg').innerHTML += " Driving distance is " + directionsData.distance.text + " (" + directionsData.duration.text + ").";
+                }
+              }
+            });
+          }
 
 
 
-
-      <!--diamond jamboree X, north bus station by post X, uci art school semi off mesard X, hyundai capital south X, mac Arthur court, Toscana Apartments at leasing center 35 buena vista, Villa Siena entrance on plantine rd, NE corner of trade food hall, hyundai capital north michelson building at roundabout, park place apartments, villa coronado west entrance gate, park west apartment, 18818 teller avenue, irvine city hall bench on civic center plaza (nw corner of civic center plaza and harvard ave), west park plaza sprouts, west park plaza target, west park plaza ca fish grill, culver plaza hearthstone dr, culver plaza 7-11 -->
+        <!--diamond jamboree X, north bus station by post X, uci art school semi off mesard X, hyundai capital south X, mac Arthur court, Toscana Apartments at leasing center 35 buena vista, Villa Siena entrance on plantine rd, NE corner of trade food hall, hyundai capital north michelson building at roundabout, park place apartments, villa coronado west entrance gate, park west apartment, 18818 teller avenue, irvine city hall bench on civic center plaza (nw corner of civic center plaza and harvard ave), west park plaza sprouts, west park plaza target, west park plaza ca fish grill, culver plaza hearthstone dr, culver plaza 7-11 -->
       }
 
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHPx7NLrM0UwRLrfSX674rCoS3CtueB48&callback=initMap"
     async defer></script>
+
+    <button><p1 id="gobutton" onclick="initMap(true)">GO</p1></button>
+
+
+
   </body>
 </html>
