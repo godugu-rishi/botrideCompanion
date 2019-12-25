@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+  <title>My geocode app</title>
+</head>
+<body>
+
+  <div id="formatted-address">
+
+  </div>
+
+
+  <script>
+    geo();
+    function geo(){
+
+      var location ='22 Main st Boston MA';
+      axios.get('https://maps.googleapis.com/maps/api/geocode/json',{
+        params:{
+          address:location,
+          key:'AIzaSyDHPx7NLrM0UwRLrfSX674rCoS3CtueB48'
+        }
+      })
+      .then(function(response){
+        //log reponse
+        console.log(response);
+
+        //formatted adress
+        var formattedAddress = response.data.results[0].formatted_address;
+        //output to app
+        document.getElementById('formatted-address').innerHTML=formattedAddress;
+      })
+      .catch(function(error){
+        console.log(error);
+      });
+    }
+  </script>
+
+</body>
+</html>
