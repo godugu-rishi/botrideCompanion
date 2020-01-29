@@ -47,7 +47,7 @@
     <div id="msg"></div>
     <script>
       var map;
-
+      var whereAm = localStorage.getItem("currentPosition");
       <!-- init map object -->
       function initMap(route) {
         map = new google.maps.Map(document.getElementById('map'), {
@@ -75,6 +75,11 @@
           position:{lat:33.670126,lng:-117.861735},
           map:map
         });
+
+        var myLoc = new google.maps.Marker({
+          position:whereAm,
+          map:map
+        });
         let directionsService = new google.maps.DirectionsService();
         let directionsRenderer = new google.maps.DirectionsRenderer();
 
@@ -83,7 +88,7 @@
           directionsRenderer.setMap(map); // Existing map object displays directions
           // Create route from existing points used for markers
           const route = {
-              origin: {lat:33.689642,lng:-117.834837},
+              origin:whereAm,
               destination: {lat:33.649328,lng:-117.839692},
               travelMode: 'DRIVING'
           }
@@ -113,7 +118,7 @@
       }
 
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHPx7NLrM0UwRLrfSX674rCoS3CtueB48&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key= ---- &callback=initMap"
     async defer></script>
 
     <button><p1 id="gobutton" onclick="initMap(true)">GO</p1></button>
